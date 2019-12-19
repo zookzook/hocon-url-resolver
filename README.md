@@ -1,6 +1,6 @@
 # HoconUrlResolver
 
-**TODO: Add description**
+An implementation of the behaviour `Hocon.Resolver`.
 
 ## Installation
 

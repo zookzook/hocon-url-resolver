@@ -1,9 +1,6 @@
 defmodule HoconUrlResolver do
   @moduledoc """
-  This module is responsible for loading file resources.
-
-  By implementing the behaviour `Hocon.Resolver` it is possible to replace this module. For example to load the resource
-  from a database or from an url.
+  This module is responsible for loading resources from internet.
   """
 
   @behaviour Hocon.Resolver
@@ -12,9 +9,9 @@ defmodule HoconUrlResolver do
   Returns `true` if `resource` exists.
 
   ## Example
-      iex> Hocon.FileResolver.exists?("app.conf")
+      iex> HoconUrlResolver.exists?("https://where")
       false
-      iex> Hocon.FileResolver.exists?("./test/data/include-1.conf")
+      iex> HoconUrlResolver.exists?("https://where")
       true
 
   """
@@ -31,9 +28,9 @@ defmodule HoconUrlResolver do
   Returns a tuple with the content of the `resource`
 
   ## Example
-      iex> Hocon.FileResolver.load("app.conf")
+      iex> HoconUrlResolver.load("app.conf")
       {:error, :enoent}
-      iex> Hocon.FileResolver.load("./test/data/include-1.conf")
+      iex> HoconUrlResolver.load("./test/data/include-1.conf")
       {:ok, "{ x : 10, y : ${a.x} }"}
   """
   @spec load(Path.t()) :: {:ok, binary} | {:error, File.posix}
