@@ -1,10 +1,13 @@
-/_build
-/cover
-/deps
-/doc
+/_build/
+/cover/
+/deps/
+/doc/
 /.fetch
 erl_crash.dump
 *.ez
+hocon_url_resolver-*.tar
 *.beam
 /config/*.secret.exs
 .elixir_ls/
+.idea/
+*.iml
