@@ -27,6 +27,7 @@ defmodule HoconUrlResolver.MixProject do
   defp deps do
     [
       {:excoveralls, "~> 0.12.1", only: :test},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:httpoison, "~> 1.6"},
       {:hocon, "~> 0.1.5"}
     ]

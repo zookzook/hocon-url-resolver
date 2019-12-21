@@ -1,6 +1,15 @@
 defmodule HoconUrlResolver do
   @moduledoc """
-  This module is responsible for loading resources from internet.
+  This module is responsible for loading resources from the internet.
+
+  It uses the `HTTPoison` client to fetch the configuration. It is used with `Hocon` to include URL configuration by using
+  the module with the Keyword `:url_resolver`:
+
+  ## Example
+
+      iex> Hocon.decode( ~s( b : { include url\("https://raw.githubusercontent.com/zookzook/hocon-url-resolver/master/test/data/config-1.conf"\) }), url_resolver: HoconUrlResolver )
+      {:ok, %{"b" => %{"a" => "The answer is 42"}}}
+
   """
 
   @behaviour Hocon.Resolver
@@ -9,9 +18,9 @@ defmodule HoconUrlResolver do
   Returns `true` if `resource` exists.
 
   ## Example
-      iex> HoconUrlResolver.exists?("https://where")
+      iex> HoconUrlResolver.exists?("https://raw.githubusercontent.com/zookzook/hocon-url-resolver/master/test/data/config-2.conf")
       false
-      iex> HoconUrlResolver.exists?("https://where")
+      iex> HoconUrlResolver.exists?("https://raw.githubusercontent.com/zookzook/hocon-url-resolver/master/test/data/config-1.conf")
       true
 
   """
@@ -28,10 +37,10 @@ defmodule HoconUrlResolver do
   Returns a tuple with the content of the `resource`
 
   ## Example
-      iex> HoconUrlResolver.load("app.conf")
-      {:error, :enoent}
-      iex> HoconUrlResolver.load("./test/data/include-1.conf")
-      {:ok, "{ x : 10, y : ${a.x} }"}
+      iex> HoconUrlResolver.load("https://raw.githubusercontent.com/zookzook/hocon-url-resolver/master/test/data/config-2.conf")
+      {:error, "not found"}
+      iex> HoconUrlResolver.load("https://raw.githubusercontent.com/zookzook/hocon-url-resolver/master/test/data/config-1.conf")
+      {:ok, "{\\n  a : \\"The answer is 42\\"\\n}"}
   """
   @spec load(Path.t()) :: {:ok, binary} | {:error, File.posix}
   def load(url) do
